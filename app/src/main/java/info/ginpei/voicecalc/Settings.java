@@ -1,5 +1,6 @@
 package info.ginpei.voicecalc;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 public class Settings {
@@ -9,6 +10,7 @@ public class Settings {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
+    @SuppressLint("CommitPrefEdits")
     public Settings(SharedPreferences preferences) {
         this.preferences = preferences;
         editor = preferences.edit();
