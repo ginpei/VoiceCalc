@@ -11,22 +11,22 @@
     tools:context="info.ginpei.voicecalc.SettingsActivity">
 
     <TextView
-        android:text="Voice Input"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:text="Voice Input"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <CheckBox
-        android:text='Add "Equals" after your phrase'
+        android:id="@+id/autoEqualsCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/autoEqualsCheckBox"
-        android:onClick="autoEqualsCheckBox_click"/>
+        android:layout_below="@+id/textView"
+        android:onClick="autoEqualsCheckBox_click"
+        android:text='Add "Equals" after your phrase' />
 </RelativeLayout>
