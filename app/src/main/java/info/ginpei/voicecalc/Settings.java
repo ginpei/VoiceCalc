@@ -26,7 +26,7 @@ public class Settings {
     }
 
     public boolean getAutoEquals() {
-        return preferences.getBoolean(KEY_AUTO_EQUALS, false);
+        return preferences.getBoolean(KEY_AUTO_EQUALS, true);
     }
 
     public void setAutoEquals(boolean autoEquals) {
