@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                     message += "No permissions. Please allow the app to access to your mic.";
                     break;
             }
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             Log.e(TAG, message);
         }
 
