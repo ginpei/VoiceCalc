@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.speech.SpeechRecognizer.*;
+
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "VoiceCalc#MainActivity";
     protected Calculator calculator = new Calculator();
@@ -218,8 +220,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onError(int error) {
-            Toast.makeText(getApplicationContext(), "error #" + error, Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "error #" + error);
+            String message = "Error #" + error + ". ";
+            switch (error) {
+                case ERROR_NETWORK_TIMEOUT:
+                case ERROR_NETWORK:
+                    message += "Network error. Make sure the network is available.";
+                    break;
+
+                case ERROR_SPEECH_TIMEOUT:
+                    message += "Timed out. Did you speak enough loudly?";
+                    break;
+
+                case ERROR_NO_MATCH:
+                    message += "No match. Did you speak enough clearly?";
+                    break;
+
+                case ERROR_INSUFFICIENT_PERMISSIONS:
+                    message += "No permissions. Please allow the app to access to your mic.";
+                    break;
+            }
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            Log.e(TAG, message);
         }
 
         public void onReadyForSpeech(Bundle params) {
