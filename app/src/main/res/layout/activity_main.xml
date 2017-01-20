@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -27,14 +28,13 @@
             android:textColorLink="@color/colorPrimary"
             android:textSize="50sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_voice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:onClick="voice_click"
-            android:text="🔈"
-            android:textColor="@color/colorPrimary" />
+            app:srcCompat="@drawable/ic_mic_black_24dp" />
     </LinearLayout>
 
     <LinearLayout
