@@ -2,6 +2,7 @@ package info.ginpei.voicecalc;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -27,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private SpeechRecognizer speechRecognizer;
 
     TextView textResult;
+    private Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initPreferences();
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizer.setRecognitionListener(new listener());
@@ -41,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         textResult.setText(calculator.getPrintText());
 
         getPermission();
+    }
+
+    private void initPreferences() {
+        SharedPreferences preferences = getSharedPreferences(Settings.NAME, MODE_PRIVATE);
+        settings = new Settings(preferences);
     }
 
     @Override
@@ -125,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Phrase: " + phrase);
 
         String[] words = phrase.split(" ");
+        boolean finishedWithEquals = false;
         for (String word : words) {
             boolean numeric = word.matches("-?\\d+(\\.\\d+)?");
             if (numeric) {
@@ -182,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 case "equal":
                 case "equals":
                     calculator.calculate("");
+                    finishedWithEquals = true;
                     break;
                 case "clear":
                     calculator.clear();
@@ -194,6 +205,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             updateText();
+        }
+
+        if (!finishedWithEquals && settings.getAutoEquals()) {
+            calculator.calculate("");
+            updateText();
+            Log.d(TAG, "Equals is added automatically.");
         }
     }
 
