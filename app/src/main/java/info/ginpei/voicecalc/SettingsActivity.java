@@ -1,6 +1,5 @@
 package info.ginpei.voicecalc;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,13 +14,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        initPreferences();
+        settings = Settings.createInstance(this);
         initViews();
-    }
-
-    private void initPreferences() {
-        SharedPreferences preferences = getSharedPreferences(Settings.NAME, MODE_PRIVATE);
-        settings = new Settings(preferences);
     }
 
     private void initViews() {

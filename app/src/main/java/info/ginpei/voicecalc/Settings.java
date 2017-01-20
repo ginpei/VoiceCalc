@@ -1,7 +1,10 @@
 package info.ginpei.voicecalc;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.SharedPreferences;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Settings {
     final public static String NAME = "info.ginpei.voicecalc.SETTINGS";
@@ -9,6 +12,12 @@ public class Settings {
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+
+    public static Settings createInstance(Activity activity) {
+        SharedPreferences preferences = activity.getSharedPreferences(NAME, MODE_PRIVATE);
+        Settings settings = new Settings(preferences);
+        return settings;
+    }
 
     @SuppressLint("CommitPrefEdits")
     public Settings(SharedPreferences preferences) {

@@ -2,7 +2,6 @@ package info.ginpei.voicecalc;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -35,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initPreferences();
-
+        settings = Settings.createInstance(this);
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizer.setRecognitionListener(new listener());
 
@@ -45,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
         textResult.setText(calculator.getPrintText());
 
         getPermission();
-    }
-
-    private void initPreferences() {
-        SharedPreferences preferences = getSharedPreferences(Settings.NAME, MODE_PRIVATE);
-        settings = new Settings(preferences);
     }
 
     @Override
