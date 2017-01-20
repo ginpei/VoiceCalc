@@ -183,21 +183,12 @@
                 android:textColor="@color/colorPrimary" />
 
             <Button
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="operator_click"
-                android:text="+"
-                android:textColor="@color/colorPrimary" />
-
-            <Button
                 android:id="@+id/button5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="operator_click"
-                android:text="-"
+                android:text="/"
                 android:textColor="@color/colorPrimary" />
 
             <Button
@@ -215,7 +206,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="operator_click"
-                android:text="/"
+                android:text="-"
+                android:textColor="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="operator_click"
+                android:text="+"
                 android:textColor="@color/colorPrimary" />
 
             <Button
