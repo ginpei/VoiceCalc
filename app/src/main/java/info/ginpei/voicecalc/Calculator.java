@@ -19,7 +19,9 @@ public class Calculator {
     }
 
     public void addNumber(String digit) {
-        if (digit.equals(".")) {
+        if (digit.equals("0") && input.equals("0")) {
+            // just ignore second zero
+        } else if (digit.equals(".")) {
             if (input.isEmpty()) {
                 // given a dot before numbers
                 input = "0.";

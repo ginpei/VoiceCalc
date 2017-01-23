@@ -35,9 +35,8 @@ public class CalculatorTest {
         assertEquals("", calculator.input);
         calculator.addNumber("0");
         assertEquals("0", calculator.input);
-// FIXME
-//        calculator.addNumber("0");
-//        assertEquals(calculator.input, "0");
+        calculator.addNumber("0");
+        assertEquals("adding some zeros makes one zero", "0", calculator.input);
 
         calculator.setInput("");
         calculator.addNumber(".");
