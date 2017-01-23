@@ -192,11 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 case "clear":
                     calculator.clear();
                     break;
-                case "by":
-                    // do nothing
-                    break;
                 default:
-                    // TODO: error
+                    // ignore
             }
 
             updateText();
