@@ -23,7 +23,7 @@ public class Calculator {
             if (input.isEmpty()) {
                 // given a dot before numbers
                 input = "0.";
-            } else if (input.indexOf(".") < 0) {
+            } else if (!input.contains(".")) {
                 // ignore second dot
                 input += digit;
             }
