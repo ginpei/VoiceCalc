@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected Calculator calculator = new Calculator();
     private SpeechRecognizer speechRecognizer;
 
+    TextView textStatus;
     TextView textResult;
     private Settings settings;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizer.setRecognitionListener(new listener());
 
+        textStatus = (TextView) findViewById(R.id.textView_status);
         textResult = (TextView) findViewById(R.id.input_result);
 
         textResult.setText(calculator.getPrintText());
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void voice_click(View view) {
-        Toast.makeText(this, "Speak now", Toast.LENGTH_SHORT).show();
+        setStatusText("Initializing recognition...");
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -117,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
         updateText();
     }
 
+    private void setStatusText(String text) {
+        textStatus.setText(text);
+    }
+
     protected void updateText() {
         Log.d(TAG, calculator.getPrintText());
         textResult.setText(calculator.getPrintText());
@@ -124,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void parseVoice(String phrase) {
 //        parseVoice("3 plus 2 minus 1 equals");
-
-        Toast.makeText(this, "Recognized: " + phrase, Toast.LENGTH_LONG).show();
 
         Log.d(TAG, "Phrase: " + phrase);
 
@@ -214,12 +218,13 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 phrase = (String) data.get(data.size() - 1);
             }
+            setStatusText("You might say: " + phrase);
             parseVoice(phrase);
         }
 
         public void onError(int error) {
             String message = getErrorMessage(error);
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            setStatusText(message);
             Log.e(TAG, message);
         }
 
@@ -267,9 +272,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onReadyForSpeech(Bundle params) {
+            setStatusText("Waiting for your voice...");
+            Toast.makeText(getApplicationContext(), "Speak now", Toast.LENGTH_SHORT).show();
         }
 
         public void onBeginningOfSpeech() {
+            setStatusText("Listening...");
             Log.d(TAG, "onBeginningOfSpeech");
         }
 
@@ -280,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onEndOfSpeech() {
+            setStatusText("Recognizing your voice...");
             Log.d(TAG, "onEndOfSeech");
         }
 
