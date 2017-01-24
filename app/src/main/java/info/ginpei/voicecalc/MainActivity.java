@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textResult;
     private Settings settings;
     private Intent recognizerIntent;
+    boolean listening = false;
+    boolean stopping = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +90,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void voice_click(View view) {
-        setStatusText("Initializing recognition...");
-        speechRecognizer.startListening(recognizerIntent);
+        if (listening) {
+            listening = false;
+            stopping = true;
+            setStatusText("Stop listening.");
+            speechRecognizer.stopListening();
+        } else {
+            listening = true;
+            stopping = false;
+            setStatusText("Initializing recognition...");
+            speechRecognizer.startListening(recognizerIntent);
+        }
     }
 
     protected void getPermission() {
@@ -223,9 +234,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onError(int error) {
-            String message = getErrorMessage(error);
-            setStatusText(message);
-            Log.e(TAG, message);
+            listening = false;
+            if (error == ERROR_SPEECH_TIMEOUT && stopping) {
+                stopping = false;
+            } else {
+                String message = getErrorMessage(error);
+                setStatusText(message);
+                Log.e(TAG, message);
+            }
         }
 
         @NonNull
