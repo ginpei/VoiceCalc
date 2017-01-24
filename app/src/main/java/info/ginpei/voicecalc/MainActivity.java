@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -217,27 +218,52 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onError(int error) {
-            String message = "Error #" + error + ". ";
+            String message = getErrorMessage(error);
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Log.e(TAG, message);
+        }
+
+        @NonNull
+        private String getErrorMessage(int error) {
+            String message;
             switch (error) {
                 case ERROR_NETWORK_TIMEOUT:
                 case ERROR_NETWORK:
-                    message += "Network error. Make sure the network is available.";
+                    message = "Network error. Make sure the network is available.";
+                    break;
+
+                case ERROR_AUDIO:
+                    message = "Audio error. Do you have available audio stuff?";
+                    break;
+
+                case ERROR_SERVER:
+                    message = "Server error. Something went wrong...";
+                    break;
+
+                case ERROR_CLIENT:
+                    message = "Client error. Something went wrong...";
                     break;
 
                 case ERROR_SPEECH_TIMEOUT:
-                    message += "Timed out. Did you speak enough loudly?";
+                    message = "Timed out. Did you speak enough loudly?";
                     break;
 
                 case ERROR_NO_MATCH:
-                    message += "No match. Did you speak enough clearly?";
+                    message = "No match. Did you speak enough clearly?";
+                    break;
+
+                case ERROR_RECOGNIZER_BUSY:
+                    message = "Recognizer is busy.";
                     break;
 
                 case ERROR_INSUFFICIENT_PERMISSIONS:
-                    message += "No permissions. Please allow the app to access to your mic.";
+                    message = "No permissions. Please allow the app to access to your mic.";
                     break;
+
+                default:
+                    message = "Unknown error: " + error;
             }
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-            Log.e(TAG, message);
+            return message;
         }
 
         public void onReadyForSpeech(Bundle params) {
