@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textStatus;
     TextView textResult;
     private Settings settings;
+    private Intent recognizerIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         textResult = (TextView) findViewById(R.id.input_result);
 
         textResult.setText(calculator.getPrintText());
+
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "voice.recognition.test");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
 
         getPermission();
     }
@@ -83,13 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void voice_click(View view) {
         setStatusText("Initializing recognition...");
-
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "voice.recognition.test");
-
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
-        speechRecognizer.startListening(intent);
+        speechRecognizer.startListening(recognizerIntent);
     }
 
     protected void getPermission() {
