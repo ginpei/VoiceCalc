@@ -1,5 +1,9 @@
 # VoiceCalc
 
+- https://github.com/ginpei/VoiceCalc
+
+![Screenshot: listening voice input](doc/screenshot.png)
+
 ## Feature
 
 - Basic calculation
