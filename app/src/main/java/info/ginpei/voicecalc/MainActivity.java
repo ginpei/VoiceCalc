@@ -3,10 +3,13 @@ package info.ginpei.voicecalc;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected Calculator calculator = new Calculator();
     private SpeechRecognizer speechRecognizer;
 
+    ImageButton recognizeVoiceButton;
     TextView textStatus;
     TextView textResult;
     private Settings settings;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         speechRecognizer.setRecognitionListener(new listener());
 
+        recognizeVoiceButton = (ImageButton) findViewById(R.id.button_recognizeVoice);
         textStatus = (TextView) findViewById(R.id.textView_status);
         textResult = (TextView) findViewById(R.id.input_result);
 
@@ -91,16 +97,38 @@ public class MainActivity extends AppCompatActivity {
 
     public void voice_click(View view) {
         if (listening) {
-            listening = false;
+            stopListeningStatus();
             stopping = true;
             setStatusText("Stop listening.");
             speechRecognizer.stopListening();
         } else {
-            listening = true;
+            startListeningStatus();
             stopping = false;
             setStatusText("Initializing recognition...");
             speechRecognizer.startListening(recognizerIntent);
         }
+    }
+
+    private void startListeningStatus() {
+        listening = true;
+        Drawable icon = getDrawableById(R.drawable.ic_record_voice_over_black_24dp);
+        recognizeVoiceButton.setImageDrawable(icon);
+    }
+
+    private void stopListeningStatus() {
+        listening = false;
+        Drawable icon = getDrawableById(R.drawable.ic_mic_black_24dp);
+        recognizeVoiceButton.setImageDrawable(icon);
+    }
+
+    private Drawable getDrawableById(@DrawableRes int id) {
+        Drawable icon;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            icon = getDrawable(id);
+        } else {
+            icon = getResources().getDrawable(id);
+        }
+        return icon;
     }
 
     protected void getPermission() {
@@ -234,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onError(int error) {
-            listening = false;
+            stopListeningStatus();
             if (error == ERROR_SPEECH_TIMEOUT && stopping) {
                 stopping = false;
             } else {
