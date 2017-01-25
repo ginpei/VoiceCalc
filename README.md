@@ -13,5 +13,5 @@
 
 - Voice recognition using [SpeechRecognizer](https://developer.android.com/reference/android/speech/SpeechRecognizer.html)
 - Support both portrait and landscape display
-- Independent and reusable calculation module (`Calculator` class)
-    - With tests
+- Independent and reusable calculation module ([`Calculator` class](/app/src/main/java/info/ginpei/voicecalc/Calculator.java))
+    - With [tests](/app/src/test/java/info/ginpei/voicecalc/CalculatorTest.java)
