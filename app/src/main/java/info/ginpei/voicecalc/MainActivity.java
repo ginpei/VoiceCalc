@@ -97,22 +97,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void voice_click(View view) {
         if (listening) {
-            stopListeningStatus();
-            stopping = true;
-            setStatusText("Stop listening.");
-            speechRecognizer.stopListening();
+            stopListening();
         } else {
-            startListeningStatus();
-            stopping = false;
-            setStatusText("Initializing recognition...");
-            speechRecognizer.startListening(recognizerIntent);
+            startListening();
         }
+    }
+
+    private void startListening() {
+        startListeningStatus();
+        stopping = false;
+        setStatusText("Initializing recognition...");
+        speechRecognizer.startListening(recognizerIntent);
     }
 
     private void startListeningStatus() {
         listening = true;
         Drawable icon = getDrawableById(R.drawable.ic_record_voice_over_black_24dp);
         recognizeVoiceButton.setImageDrawable(icon);
+    }
+
+    private void stopListening() {
+        stopListeningStatus();
+        stopping = true;
+        setStatusText("Stop listening.");
+        speechRecognizer.stopListening();
     }
 
     private void stopListeningStatus() {
@@ -155,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void clear_click(View view) {
         calculator.clear();
+        if (listening) {
+            stopListening();
+        }
+        setStatusText("");
         updateText();
     }
 
