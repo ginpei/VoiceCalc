@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void onEndOfSpeech() {
             setStatusText("Recognizing your voice...");
-            Log.d(TAG, "onEndOfSeech");
+            Log.d(TAG, "onEndOfSpeech");
         }
 
         public void onPartialResults(Bundle partialResults) {
